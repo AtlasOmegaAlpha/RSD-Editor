@@ -1,6 +1,3 @@
-# RSD-Editor
-Wii Mii List Editor (mii_rsd.bin/mii_rsd.bin.lz)
-
 # RSD Editor
 Wii Mii List Editor (mii_rsd.bin/mii_rsd.bin.lz)
 
