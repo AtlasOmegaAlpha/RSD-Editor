@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -18,7 +18,7 @@
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -121,6 +121,21 @@
     <value>409, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="importButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAACCUlEQVQ4T52TzWsTURTFz1/i
+        xj9BaHduVKpoRbsTXOnClRsRCi6q0CJKbdJFUWoXBZuahUlmNBmbNlr8wK8GBaFrm5qJmSQ1aZppTGPG
+        47svNk1MoNADP+67c987716Yh6fRaClsmgxFInzSQVjHsGEwYpp5tQ9Ry+oCsmE/5XI5ueBxLxPIzaJv
+        aynFOtdS6zpKLpqbn9fRcRyGDCP4vwmkTdH3dJpp26adsXWUXBQIBpkvFPRaOlHjhJ7FYu0GYV20M1n+
+        yDotJBetJJPaZLcTGTkasxCzFmBZcWUQbho4yj2Xz7eQfMut6Fq7QhGDlrWERPwtXi5+2DPIFzZY2PjZ
+        gXzLKXStUNT7TGOBy/Ekjo0DAxPYMyiWSj0plTZZLrusup7el4gleVwdHvQD5ybbDDbLWz2o0K3U6O2Q
+        PusS+2+BR8fAgbvgoA/3z7cbVFy3i+3tKht10v/8Mi/MgA+/gqvF65xdBa/MgWd9eNAyqFarXdR+qauV
+        +kbAqRXQ/xE6n/wETn8GT98DWwa1Wl2x08HvenPu/ptgMnNNr3f1JTvMU+Ni8O9H8jyPXqPRAf/oEvuU
+        wZ1lcPRFswOJE6/BM9KBPKT9NPPmKoemwLEl8H1qmLcT4MVp8MQIQngUCLySv0u/QDVOO/JODDPKResd
+        b8wO8aRqWdqWm/Vh4JAChxVHDoA6DPwFR8r2VcLoJUQAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="exportAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -134,6 +149,19 @@
         5ISj2G8zXizdR7+3TjQ9PisKPdfuoUvqpFgE0H9QqWtPW+HR+qyrojzaHXEGDopFgBIKpekDOf953oXn
         xWlfx+RSL0YXO+CKtEOKtMG9cAOej7fR43aWA4TqhS+XumO4/Uf3MwecLifPSKbc4+5G15D9QyXgX7ok
         XAYt8UUAtlMVDs/zLJvPSgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="newButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4zjOaXUAAAAYlJREFUOE+Vkz1P
+        wlAUhpn8DS66sOmmmxFN3BiMDg7+ABPj6KCziYmTo4mbMQoylH4QogFDoiS6wCiLDmhAYz+gaMEGkOb1
+        nksVGlLRN3nuvbk95+3pub0BAIFEMll7SGwgIx7gXl6HIEkuIp9FWYakKHqgT5RH8MG6DKOVXwOyIbQy
+        q4CywLa90jQNcUk6c/P7DFJjO6WLZeBuEbiaBcRJVI9CMM83UXx84smn0SifVVVFXJZjHgN5ezyM7BRL
+        ngGECeBwFNgbQeFGQKlc5omRWAy6YfA1VcI+J86W/RUseSowj+dhpbfw/PLKk3L5PDf5roR6wuQasMFK
+        93rwkVrBpzgHTdehsrdZjToFe0SNZeoZCKIIFPZhFm9h53ZhVKo/6EYFGqEbHBKPHzBgMms1X6qmySH5
+        Gry9W0Mh+RrUG42hkHwNbNseCsnXoNlsM1q/0OZxgwbdY4HjOHA6HX/Yc9LAMYqKQht/lhvfMziJRK7p
+        7+I3kJXni3szKd5jwBRkTP+DYNcAgS8NciX5RpNlZQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="openButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -242,6 +270,19 @@
         BhylE8IVUJOPA7AcAHt50IQ2Z7GkAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="deleteButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAAaVJREFUOE+Nk0lLw0AcxfNJevELKG5FvAgqUhVBBBGseBGvQkHwJr0Jgp7Us7YW
+        MWkievLkualnD26tjZqli0spbW18zn+MIaGt+uDHy5tM3sxARjg5PS1JigIxmcSxD4m7JMtIKoopeATA
+        RaAJf8kwDFrg0PneX0Ark+7uM4ws7jNZ7pRJB/E4d13XIcpyoqmAtkl6yOWQ0zRojxp3yqRYIgHTsvgz
+        7YQdR2SP3gKJ3rEPn/H0rLtQJqVUlZf87MQ5sqdA+i7QWbthmi6U38rv/J1Xzo6bC0wrDytf8EFjBmFa
+        HJIzv7mgWCq1pVAsckhtC15e337leisKNdSDVKib++Vk366v4L1cbsvNdhS3C6PAxgqwGeFO+XKid9ct
+        qFQqbVHZqlgL43N1FnZkhjtlGncLqtU6o9aS1FgXcH7E57limcbdH8m2bdiNRkvS4z34WBpCfXEQ1fAA
+        d8o0LtBF+kvp9QiupoOohYOoh/u5Uz4b7hSF/Vjsgv4ufgPZcVqxs7eHk+U5pCeDUBnkZyNdIrsWAbob
+        HYzufzDOmGdMOTkAQPgCAiAUtxX/Y7kAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>299, 17</value>
   </metadata>
@@ -250,7 +291,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAZggAAAJNU0Z0AUkBTAMBAQAB
-        gAEAAYABAAEQAQABEAEABP8BCQEACP8BQgFNATYBBAYAATYBBAIAASgDAAFAAwABEAMAAQEBAAEIBgAB
+        iAEAAYgBAAEQAQABEAEABP8BCQEACP8BQgFNATYBBAYAATYBBAIAASgDAAFAAwABEAMAAQEBAAEIBgAB
         BBgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHcAcABAAHwAcoBpgEAATMFAAEzAQAB
         MwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEAAzkBAAGAAXwB/wEAAlAB/wEAAZMB
         AAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEzAwABZgMAAZkDAAHMAgABMwMAAjMC

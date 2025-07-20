@@ -46,16 +46,22 @@ namespace RSD_Editor
                 OpenFile(ofd.FileName);
         }
 
-        public void OpenFile(string fileName)
+        private void Clear(bool newFile)
         {
-            treeView1.Enabled = false;
-            saveButton.Enabled = false;
-            saveAsButton.Enabled = false;
+            treeView1.Enabled = newFile;
+            saveButton.Enabled = newFile;
+            saveAsButton.Enabled = newFile;
             treeView1.Nodes[0].Nodes.Clear();
             miis = new List<byte[]>();
             miiNames = new List<string>();
+            compressed = false;
+        }
 
-            EndianReader reader = new EndianReader(File.Open(fileName, FileMode.Open), Endianness.BigEndian);
+        public void OpenFile(string fileName)
+        {
+            Clear(false);
+
+             EndianReader reader = new EndianReader(File.Open(fileName, FileMode.Open), Endianness.BigEndian);
             if (reader.StreamLength < 4)
                 return;
 
@@ -161,7 +167,7 @@ namespace RSD_Editor
             File.WriteAllBytes(sfd.FileName, miis[index]);
         }
 
-        private void ReplaceMii(int index)
+        private void AddOrReplaceMii(int index)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = miiFilter + "|All files (*.*)|*.*";
@@ -178,9 +184,32 @@ namespace RSD_Editor
             byte[] miiData = File.ReadAllBytes(ofd.FileName);
             string miiName = MiiData.GetMiiName(miiData);
 
+            if (index == -1)
+            {
+                miis.Add(miiData);
+                miiNames.Add(miiName);
+                TreeNode t = new TreeNode("[" + (miis.Count - 1) + "] " + miiName);
+                t.ContextMenuStrip = miiContextMenuStrip;
+                treeView1.Nodes[0].Nodes.Add(t);
+                treeView1.ExpandAll();
+                return;
+            }
+
             miis[index] = miiData;
             miiNames[index] = miiName;
             treeView1.Nodes[0].Nodes[index].Text = "[" + index + "] " + miiName;
+        }
+
+        private void DeleteMii(int index)
+        {
+            miis.RemoveAt(index);
+            miiNames.RemoveAt(index);
+            treeView1.Nodes[0].Nodes[index].Remove();
+
+            for (int i = index; i < miis.Count; i++)
+            {
+                treeView1.Nodes[0].Nodes[i].Text = "[" + i + "] " + miiNames[i];
+            }
         }
 
         private void exportAllButton_Click(object sender, EventArgs e)
@@ -203,7 +232,7 @@ namespace RSD_Editor
                 return;
 
             int i = treeView1.SelectedNode.Index;
-            ReplaceMii(i);
+            AddOrReplaceMii(i);
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -211,21 +240,32 @@ namespace RSD_Editor
             if (!treeView1.Enabled)
                 return;
 
-            if (e.Modifiers != Keys.Control)
+            if (e.KeyCode == Keys.Delete && treeView1.SelectedNode.Parent != null)
+            {
+                DeleteMii(treeView1.SelectedNode.Index);
+                return;
+            }
+            else if (e.Modifiers != Keys.Control)
                 return;
 
-            if (e.KeyCode == Keys.E)
+            switch (e.KeyCode)
             {
-                if (treeView1.SelectedNode.Parent == null)
-                    ExportAllMiis();
-                else
-                    ExportMii(treeView1.SelectedNode.Index);
+                case Keys.E:
+                    if (treeView1.SelectedNode.Parent == null)
+                        ExportAllMiis();
+                    else
+                        ExportMii(treeView1.SelectedNode.Index);
+                    break;
 
-            }
-            else if (e.KeyCode == Keys.R)
-            {
-                if (treeView1.SelectedNode.Parent != null)
-                    ReplaceMii(treeView1.SelectedNode.Index);
+                case Keys.R:
+                    if (treeView1.SelectedNode.Parent != null)
+                        AddOrReplaceMii(treeView1.SelectedNode.Index);
+                    break;
+
+                case Keys.Oemplus:
+                    if (treeView1.SelectedNode.Parent == null)
+                        AddOrReplaceMii(-1);
+                    break;
             }
         }
 
@@ -253,6 +293,21 @@ namespace RSD_Editor
 
             compressed = sfd.FileName.EndsWith(".lz");
             SaveFile(sfd.FileName);
+        }
+
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            Clear(true);
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteMii(treeView1.SelectedNode.Index);
+        }
+
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            AddOrReplaceMii(-1);
         }
     }
 }

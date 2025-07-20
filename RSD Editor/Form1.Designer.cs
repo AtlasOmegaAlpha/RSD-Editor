@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             TreeNode treeNode1 = new TreeNode("Mii List", 0, 0);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             listContextMenuStrip = new ContextMenuStrip(components);
             exportAllButton = new ToolStripMenuItem();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -49,6 +49,9 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             toolStripMenuItem1 = new ToolStripMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
+            newButton = new ToolStripMenuItem();
+            importButton = new ToolStripMenuItem();
+            deleteButton = new ToolStripMenuItem();
             listContextMenuStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             miiContextMenuStrip.SuspendLayout();
@@ -57,22 +60,22 @@
             // 
             // listContextMenuStrip
             // 
-            listContextMenuStrip.Items.AddRange(new ToolStripItem[] { exportAllButton });
+            listContextMenuStrip.Items.AddRange(new ToolStripItem[] { importButton, exportAllButton });
             listContextMenuStrip.Name = "listContextMenuStrip";
-            listContextMenuStrip.Size = new Size(165, 26);
+            listContextMenuStrip.Size = new Size(193, 70);
             // 
             // exportAllButton
             // 
             exportAllButton.Image = (Image)resources.GetObject("exportAllButton.Image");
             exportAllButton.Name = "exportAllButton";
             exportAllButton.ShortcutKeys = Keys.Control | Keys.E;
-            exportAllButton.Size = new Size(164, 22);
+            exportAllButton.Size = new Size(192, 22);
             exportAllButton.Text = "Export All";
             exportAllButton.Click += exportAllButton_Click;
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openButton, toolStripSeparator1, saveButton, saveAsButton, toolStripSeparator2, exitButton });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newButton, openButton, toolStripSeparator1, saveButton, saveAsButton, toolStripSeparator2, exitButton });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "File";
@@ -136,9 +139,9 @@
             // 
             // miiContextMenuStrip
             // 
-            miiContextMenuStrip.Items.AddRange(new ToolStripItem[] { exportButton, replaceButton });
+            miiContextMenuStrip.Items.AddRange(new ToolStripItem[] { exportButton, replaceButton, deleteButton });
             miiContextMenuStrip.Name = "miiContextMenuStrip";
-            miiContextMenuStrip.Size = new Size(157, 48);
+            miiContextMenuStrip.Size = new Size(157, 70);
             // 
             // exportButton
             // 
@@ -211,6 +214,33 @@
             toolStripMenuItem2.Size = new Size(156, 22);
             toolStripMenuItem2.Text = "Replace";
             // 
+            // newButton
+            // 
+            newButton.Image = (Image)resources.GetObject("newButton.Image");
+            newButton.Name = "newButton";
+            newButton.ShortcutKeys = Keys.Control | Keys.N;
+            newButton.Size = new Size(186, 22);
+            newButton.Text = "New";
+            newButton.Click += newButton_Click;
+            // 
+            // importButton
+            // 
+            importButton.Image = (Image)resources.GetObject("importButton.Image");
+            importButton.Name = "importButton";
+            importButton.ShortcutKeys = Keys.Control | Keys.Oemplus;
+            importButton.Size = new Size(192, 22);
+            importButton.Text = "Import";
+            importButton.Click += importButton_Click;
+            // 
+            // deleteButton
+            // 
+            deleteButton.Image = (Image)resources.GetObject("deleteButton.Image");
+            deleteButton.Name = "deleteButton";
+            deleteButton.ShortcutKeys = Keys.Delete;
+            deleteButton.Size = new Size(156, 22);
+            deleteButton.Text = "Delete";
+            deleteButton.Click += deleteButton_Click;
+            // 
             // Form1
             // 
             AllowDrop = true;
@@ -255,5 +285,8 @@
         private ToolStripMenuItem toolStripMenuItem2;
         private ContextMenuStrip listContextMenuStrip;
         private ToolStripMenuItem exportAllButton;
+        private ToolStripMenuItem newButton;
+        private ToolStripMenuItem importButton;
+        private ToolStripMenuItem deleteButton;
     }
 }

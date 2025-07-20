@@ -241,5 +241,4 @@ namespace Compression
             }
         }
     }
-
 }
