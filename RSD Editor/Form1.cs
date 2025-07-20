@@ -1,6 +1,7 @@
 using Compression;
 using System;
 using System.Collections;
+using System.Data.SqlTypes;
 using System.Text;
 using System.Windows.Forms;
 using Util.Mii;
@@ -15,7 +16,7 @@ namespace RSD_Editor
         private List<string> miiNames = new List<string>();
         private string filePath = "";
 
-        private string miiFilter = ".mae file (*.mae)|*.mae|.mii file (*.mii)|*.mii|*.miigx file (*.miigx)|*.miigx";
+        private string miiFilter = ".rsd file (*.rsd)|*.rsd|.mae file (*.mae)|*.mae|.mii file (*.mii)|*.mii|*.miigx file (*.miigx)|*.miigx";
 
         public Form1()
         {
@@ -41,7 +42,7 @@ namespace RSD_Editor
         private void openButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "All supported files (*.bin; *.bin.lz)|*.bin;*.bin.lz|mii_rsd.bin (*.bin)|*.bin|mii_rsd.bin.lz (*.bin.lz)|*.bin.lz";
+            ofd.Filter = "All supported files (*.rsd; *.bin; *.bin.lz)|*.rsd;*.bin;*.bin.lz|RSD files (*.rsd)|mii_rsd.bin (*.bin)|*.bin|mii_rsd.bin.lz (*.bin.lz)|*.bin.lz";
             if (ofd.ShowDialog() == DialogResult.OK)
                 OpenFile(ofd.FileName);
         }
@@ -105,6 +106,13 @@ namespace RSD_Editor
 
         private void SaveFile(string fileName)
         {
+            if (fileName.ToLower().EndsWith(".rsd") && miis.Count > 1)
+            {
+                DialogResult dr = MessageBox.Show("WARNING: Saving as a single RSD file, but there is more than 1 Mii in this file (RSD files are meant to be a single Mii file). Proceed?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr != DialogResult.OK)
+                    return;
+            }
+
             EndianWriter writer = new EndianWriter(new MemoryStream(), Endianness.BigEndian);
             for (int i = 0; i < miis.Count; i++)
             {
@@ -136,8 +144,23 @@ namespace RSD_Editor
             Close();
         }
 
+        private byte[] GetMiiWithChecksum(byte[] mii)
+        {
+            byte[] miiBytes = mii.ToArray();
+            byte[] checksum = BitConverter.GetBytes(MiiData.CalculateCRC(mii));
+            Array.Reverse(checksum);
+            miiBytes = miiBytes.Concat(checksum).ToArray();
+            return miiBytes;
+        }
+
         private void ExportAllMiis()
         {
+            if (miis.Count <= 0)
+            {
+                MessageBox.Show("There's nothing to export!", "Empty file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             ExtensionSelector extensionSelector = new ExtensionSelector();
             if (extensionSelector.ShowDialog() != DialogResult.OK)
                 return;
@@ -149,7 +172,11 @@ namespace RSD_Editor
             int i = 0;
             foreach (byte[] mii in miis)
             {
-                File.WriteAllBytes(fbd.SelectedPath + "/" + i + "_" + Validation.ValidateFileName(miiNames[i]) + extensionSelector.selectedExtension, mii);
+                byte[] miiBytes = mii.ToArray();
+                if (extensionSelector.selectedExtension == ".rsd")
+                    miiBytes = GetMiiWithChecksum(mii);
+
+                File.WriteAllBytes(fbd.SelectedPath + "/" + i + "_" + Validation.ValidateFileName(miiNames[i]) + extensionSelector.selectedExtension, miiBytes);
                 i++;
             }
 
@@ -160,11 +187,15 @@ namespace RSD_Editor
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = miiFilter;
-            sfd.FileName = index + "_" + Validation.ValidateFileName(miiNames[index]) + ".mae";
+            sfd.FileName = index + "_" + Validation.ValidateFileName(miiNames[index]) + ".rsd";
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
 
-            File.WriteAllBytes(sfd.FileName, miis[index]);
+            byte[] miiBytes = miis[index].ToArray();
+            if (sfd.FileName.ToLower().EndsWith(".rsd"))
+                miiBytes = GetMiiWithChecksum(miis[index]);
+
+            File.WriteAllBytes(sfd.FileName, miiBytes);
         }
 
         private void AddOrReplaceMii(int index)
@@ -174,14 +205,27 @@ namespace RSD_Editor
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
+            bool isRsd = false;
             FileInfo fileInfo = new FileInfo(ofd.FileName);
-            if (fileInfo.Length != 0x4A)
+            if (ofd.FileName.ToLower().EndsWith(".rsd"))
+            {
+                if (fileInfo.Length != 0x4C)
+                {
+                    MessageBox.Show("Invalid RSD file: File size must be 0x4C bytes long.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                isRsd = true;
+            }
+            else if (fileInfo.Length != 0x4A)
             {
                 MessageBox.Show("Invalid Mii file: File size must be 0x4A bytes long.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             byte[] miiData = File.ReadAllBytes(ofd.FileName);
+            if (isRsd)
+                miiData = miiData.Take(miiData.Length - 2).ToArray();
             string miiName = MiiData.GetMiiName(miiData);
 
             if (index == -1)
@@ -281,13 +325,45 @@ namespace RSD_Editor
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (miis.Count <= 0)
+            {
+                MessageBox.Show("There's nothing to save!", "Empty file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                SaveAs();
+                return;
+            }
+
             SaveFile(filePath);
         }
 
         private void saveAsButton_Click(object sender, EventArgs e)
         {
+            if (miis.Count <= 0)
+            {
+                MessageBox.Show("There's nothing to save!", "Empty file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            SaveAs();
+        }
+
+        private void SaveAs()
+        {
+            if (miis.Count <= 0)
+            {
+                MessageBox.Show("There's nothing to save!", "Empty file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = compressed ? "mii_rsd.bin.lz (*.bin.lz)|*.bin.lz|mii_rsd.bin (*.bin)|*.bin" : "mii_rsd.bin (*.bin)|*.bin|mii_rsd.bin.lz (*.bin.lz)|*.bin.lz";
+            if (!compressed && miis.Count == 1)
+                sfd.Filter = "RSD Files (*.rsd)|*.rsd|mii_rsd.bin (*.bin)|*.bin|mii_rsd.bin.lz (*.bin.lz)|*.bin.lz";
+            else
+                sfd.Filter = compressed ? "mii_rsd.bin.lz (*.bin.lz)|*.bin.lz|mii_rsd.bin (*.bin)|*.bin" : "mii_rsd.bin (*.bin)|*.bin|mii_rsd.bin.lz (*.bin.lz)|*.bin.lz";
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
 

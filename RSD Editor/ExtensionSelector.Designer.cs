@@ -47,7 +47,7 @@
             // 
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { ".mae", ".mii", ".miigx" });
+            comboBox1.Items.AddRange(new object[] { ".rsd", ".mae", ".mii", ".miigx" });
             comboBox1.Location = new Point(12, 42);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(143, 23);
